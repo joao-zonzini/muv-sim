@@ -13,14 +13,6 @@ int main(){
 
   fprintf(gnuplot, "plot '-'\n");
 
-  arqPosic = fopen("posxtemp.csv", "w");
-  arqData = fopen("data.csv", "w");
-
-  if (arqPosic == NULL || arqData == NULL) {
-    printf("ARQ DEU RUIM\n");
-    exit(0);
-  }
-
   sMovel mAux;
   float novaPosicao = 0, novaVeloc = 0;
 
@@ -39,8 +31,6 @@ int main(){
     novaPosicao += (mAux.acelerac / 2) * (t * t);
 
     printf("Posicao: %.3f m, Velocidade: %.3f m/s, Tempo: %.2f s\n", novaPosicao, novaVeloc, t);
-    fprintf(arqPosic, "%.3f, %.4f\n", t, novaPosicao);
-    fprintf(arqData, "%.3f, %.3f\n", novaPosicao, novaVeloc);
     fprintf(gnuplot, "%g %g\n", t, novaPosicao);
     novaPosicao = 0;
     novaVeloc = 0;
@@ -48,9 +38,6 @@ int main(){
 
   fprintf(gnuplot, "e\n");
   fflush(gnuplot);
-
-  fclose(arqPosic);
-  fclose(arqData);
 
   system("sleep 30");
 
